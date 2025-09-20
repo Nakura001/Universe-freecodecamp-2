@@ -44,24 +44,25 @@ SET default_tablespace = '';
 SET default_table_access_method = heap;
 
 --
--- Name: blackhole; Type: TABLE; Schema: public; Owner: freecodecamp
+-- Name: comet; Type: TABLE; Schema: public; Owner: freecodecamp
 --
 
-CREATE TABLE public.blackhole (
-    blackhole_id integer NOT NULL,
-    gravity integer,
-    wormhole boolean DEFAULT false NOT NULL,
-    name character varying(255) NOT NULL
+CREATE TABLE public.comet (
+    comet_id integer NOT NULL,
+    name character varying(255) NOT NULL,
+    speed integer,
+    tail_length integer,
+    galaxy_id integer
 );
 
 
-ALTER TABLE public.blackhole OWNER TO freecodecamp;
+ALTER TABLE public.comet OWNER TO freecodecamp;
 
 --
--- Name: blackhole_blackhole_id_seq; Type: SEQUENCE; Schema: public; Owner: freecodecamp
+-- Name: comet_comet_id_seq; Type: SEQUENCE; Schema: public; Owner: freecodecamp
 --
 
-CREATE SEQUENCE public.blackhole_blackhole_id_seq
+CREATE SEQUENCE public.comet_comet_id_seq
     AS integer
     START WITH 1
     INCREMENT BY 1
@@ -70,13 +71,13 @@ CREATE SEQUENCE public.blackhole_blackhole_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.blackhole_blackhole_id_seq OWNER TO freecodecamp;
+ALTER TABLE public.comet_comet_id_seq OWNER TO freecodecamp;
 
 --
--- Name: blackhole_blackhole_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: freecodecamp
+-- Name: comet_comet_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: freecodecamp
 --
 
-ALTER SEQUENCE public.blackhole_blackhole_id_seq OWNED BY public.blackhole.blackhole_id;
+ALTER SEQUENCE public.comet_comet_id_seq OWNED BY public.comet.comet_id;
 
 
 --
@@ -125,7 +126,7 @@ CREATE TABLE public.moon (
     name character varying(255) NOT NULL,
     has_water boolean NOT NULL,
     planet_id integer NOT NULL,
-    name_code character varying(255) NOT NULL
+    sky character varying(255)
 );
 
 
@@ -228,10 +229,10 @@ ALTER SEQUENCE public.star_star_id_seq OWNED BY public.star.star_id;
 
 
 --
--- Name: blackhole blackhole_id; Type: DEFAULT; Schema: public; Owner: freecodecamp
+-- Name: comet comet_id; Type: DEFAULT; Schema: public; Owner: freecodecamp
 --
 
-ALTER TABLE ONLY public.blackhole ALTER COLUMN blackhole_id SET DEFAULT nextval('public.blackhole_blackhole_id_seq'::regclass);
+ALTER TABLE ONLY public.comet ALTER COLUMN comet_id SET DEFAULT nextval('public.comet_comet_id_seq'::regclass);
 
 
 --
@@ -263,12 +264,12 @@ ALTER TABLE ONLY public.star ALTER COLUMN star_id SET DEFAULT nextval('public.st
 
 
 --
--- Data for Name: blackhole; Type: TABLE DATA; Schema: public; Owner: freecodecamp
+-- Data for Name: comet; Type: TABLE DATA; Schema: public; Owner: freecodecamp
 --
 
-INSERT INTO public.blackhole VALUES (1, NULL, false, 'bh1');
-INSERT INTO public.blackhole VALUES (2, NULL, false, 'bh2');
-INSERT INTO public.blackhole VALUES (3, NULL, false, 'bh3');
+INSERT INTO public.comet VALUES (1, 'Halley', 70, 24, 1);
+INSERT INTO public.comet VALUES (2, 'Hale-Bopp', 52, 40, 1);
+INSERT INTO public.comet VALUES (3, 'Encke', 69, 10, 2);
 
 
 --
@@ -287,25 +288,26 @@ INSERT INTO public.galaxy VALUES (6, NULL, NULL, 'galaxy6', 100000);
 -- Data for Name: moon; Type: TABLE DATA; Schema: public; Owner: freecodecamp
 --
 
-INSERT INTO public.moon VALUES (1, 'moon1', true, 2, 'moon1');
-INSERT INTO public.moon VALUES (2, 'moon1', true, 3, 'moon2');
-INSERT INTO public.moon VALUES (3, 'moon3', true, 4, 'moon3');
-INSERT INTO public.moon VALUES (5, 'moon3', true, 4, 'moon5');
-INSERT INTO public.moon VALUES (6, 'moon3', true, 4, 'moon6');
-INSERT INTO public.moon VALUES (7, 'moon3', true, 4, 'moon7');
-INSERT INTO public.moon VALUES (8, 'moon3', true, 4, 'moon8');
-INSERT INTO public.moon VALUES (9, 'moon3', true, 4, 'moon9');
-INSERT INTO public.moon VALUES (10, 'moon3', true, 4, 'moon10');
-INSERT INTO public.moon VALUES (11, 'moon3', true, 4, 'moon11');
-INSERT INTO public.moon VALUES (12, 'moon3', true, 4, 'moon12');
-INSERT INTO public.moon VALUES (13, 'moon3', true, 4, 'moon13');
-INSERT INTO public.moon VALUES (14, 'moon3', true, 4, 'moon14');
-INSERT INTO public.moon VALUES (15, 'moon3', true, 4, 'moon15');
-INSERT INTO public.moon VALUES (16, 'moon3', true, 4, 'moon16');
-INSERT INTO public.moon VALUES (17, 'moon3', true, 4, 'moon76');
-INSERT INTO public.moon VALUES (18, 'moon3', true, 4, 'moon18');
-INSERT INTO public.moon VALUES (20, 'moon3', true, 4, 'moon19');
-INSERT INTO public.moon VALUES (21, 'moon3', true, 4, 'moon20');
+INSERT INTO public.moon VALUES (1, 'moon1', true, 1, NULL);
+INSERT INTO public.moon VALUES (2, 'moon2', false, 1, NULL);
+INSERT INTO public.moon VALUES (3, 'moon3', true, 2, NULL);
+INSERT INTO public.moon VALUES (4, 'moon4', false, 2, NULL);
+INSERT INTO public.moon VALUES (5, 'moon5', true, 3, NULL);
+INSERT INTO public.moon VALUES (6, 'moon6', false, 3, NULL);
+INSERT INTO public.moon VALUES (7, 'moon7', true, 4, NULL);
+INSERT INTO public.moon VALUES (8, 'moon8', false, 4, NULL);
+INSERT INTO public.moon VALUES (9, 'moon9', true, 5, NULL);
+INSERT INTO public.moon VALUES (10, 'moon10', false, 5, NULL);
+INSERT INTO public.moon VALUES (11, 'moon11', true, 6, NULL);
+INSERT INTO public.moon VALUES (12, 'moon12', false, 6, NULL);
+INSERT INTO public.moon VALUES (13, 'moon13', true, 7, NULL);
+INSERT INTO public.moon VALUES (14, 'moon14', false, 7, NULL);
+INSERT INTO public.moon VALUES (15, 'moon15', true, 8, NULL);
+INSERT INTO public.moon VALUES (16, 'moon16', false, 8, NULL);
+INSERT INTO public.moon VALUES (17, 'moon17', true, 9, NULL);
+INSERT INTO public.moon VALUES (18, 'moon18', false, 9, NULL);
+INSERT INTO public.moon VALUES (19, 'moon19', true, 10, NULL);
+INSERT INTO public.moon VALUES (20, 'moon20', false, 10, NULL);
 
 
 --
@@ -340,10 +342,10 @@ INSERT INTO public.star VALUES (6, 123461234, 'orange', 'star in galaxy 2', 2);
 
 
 --
--- Name: blackhole_blackhole_id_seq; Type: SEQUENCE SET; Schema: public; Owner: freecodecamp
+-- Name: comet_comet_id_seq; Type: SEQUENCE SET; Schema: public; Owner: freecodecamp
 --
 
-SELECT pg_catalog.setval('public.blackhole_blackhole_id_seq', 3, true);
+SELECT pg_catalog.setval('public.comet_comet_id_seq', 3, true);
 
 
 --
@@ -357,7 +359,7 @@ SELECT pg_catalog.setval('public.galaxy_galaxy_id_seq', 6, true);
 -- Name: moon_moon_id_seq; Type: SEQUENCE SET; Schema: public; Owner: freecodecamp
 --
 
-SELECT pg_catalog.setval('public.moon_moon_id_seq', 21, true);
+SELECT pg_catalog.setval('public.moon_moon_id_seq', 20, true);
 
 
 --
@@ -375,19 +377,19 @@ SELECT pg_catalog.setval('public.star_star_id_seq', 6, true);
 
 
 --
--- Name: blackhole blackhole_name_key; Type: CONSTRAINT; Schema: public; Owner: freecodecamp
+-- Name: comet comet_name_key; Type: CONSTRAINT; Schema: public; Owner: freecodecamp
 --
 
-ALTER TABLE ONLY public.blackhole
-    ADD CONSTRAINT blackhole_name_key UNIQUE (name);
+ALTER TABLE ONLY public.comet
+    ADD CONSTRAINT comet_name_key UNIQUE (name);
 
 
 --
--- Name: blackhole blackhole_pkey; Type: CONSTRAINT; Schema: public; Owner: freecodecamp
+-- Name: comet comet_pkey; Type: CONSTRAINT; Schema: public; Owner: freecodecamp
 --
 
-ALTER TABLE ONLY public.blackhole
-    ADD CONSTRAINT blackhole_pkey PRIMARY KEY (blackhole_id);
+ALTER TABLE ONLY public.comet
+    ADD CONSTRAINT comet_pkey PRIMARY KEY (comet_id);
 
 
 --
@@ -399,19 +401,19 @@ ALTER TABLE ONLY public.galaxy
 
 
 --
--- Name: moon moon_name_code_key; Type: CONSTRAINT; Schema: public; Owner: freecodecamp
---
-
-ALTER TABLE ONLY public.moon
-    ADD CONSTRAINT moon_name_code_key UNIQUE (name_code);
-
-
---
 -- Name: moon moon_pkey; Type: CONSTRAINT; Schema: public; Owner: freecodecamp
 --
 
 ALTER TABLE ONLY public.moon
     ADD CONSTRAINT moon_pkey PRIMARY KEY (moon_id);
+
+
+--
+-- Name: moon moon_sky_key; Type: CONSTRAINT; Schema: public; Owner: freecodecamp
+--
+
+ALTER TABLE ONLY public.moon
+    ADD CONSTRAINT moon_sky_key UNIQUE (sky);
 
 
 --
@@ -460,6 +462,14 @@ ALTER TABLE ONLY public.star
 
 ALTER TABLE ONLY public.star
     ADD CONSTRAINT fk_galaxy FOREIGN KEY (galaxy_id) REFERENCES public.galaxy(galaxy_id);
+
+
+--
+-- Name: comet fk_galaxy_comet; Type: FK CONSTRAINT; Schema: public; Owner: freecodecamp
+--
+
+ALTER TABLE ONLY public.comet
+    ADD CONSTRAINT fk_galaxy_comet FOREIGN KEY (galaxy_id) REFERENCES public.galaxy(galaxy_id);
 
 
 --
